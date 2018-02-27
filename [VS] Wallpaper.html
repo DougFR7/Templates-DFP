@@ -1,0 +1,86 @@
+<script>
+
+    var css = "",
+    style = document.createElement("style");
+    style.type = "text/css";
+
+var submenu = top.document.getElementsByClassName('submenu')[0];
+
+    css = "#ad-background {position: [%Position%]; width: 100%!important; height: 100%!important; top:60px; left: 0;}"+
+    "#ad-background div, #ad-background div iframe {position: absolute; width: 100%!important; height: 100%!important; top: 0; left: 0;}"+
+    ".header{position: fixed; top: 0;  z-index: 999;}"+
+    ".wrapper{ z-index: 2; position: relative; width: 970px; margin: 0 auto; background: #fff;}"+
+    "#ad-footer{ z-index: 2; position: relative;  width: 970px; margin: 0px auto; background: #fff;}"+
+    "body{background-color:#[%CordeFundo%];}"+
+    ".submenu-inner:after ,.submenu-inner:before{display:none;}"+
+    ".submenu { border: 10px #fff solid; }"+
+    ".submenu-info { margin-left: 15px; }"+
+    "footer{ z-index: 2; position: relative; width: 970px; margin: 0 auto;}"+
+    ".ad-home-banner{padding-top:0;}"+
+    "#ad-header{padding-top:0px;}"+
+    ".wrapper{padding-top:60px;}"+
+    ".header-container{width: 970px;}";
+
+    style.appendChild(document.createTextNode(css));
+
+    var element = top.document.getElementById('ad-background');
+    element.getElementsByTagName('div')[0].appendChild(style); 
+
+</script>
+
+<style>
+    #click {position:fixed; width:100%; height: 100%; top:0;left:0; display: block;}
+    #criativo-script, #criativo-interativo, #criativo-html {position:fixed; left:50%; margin-left:-750px; top:0;width: 1500px; height:1000px; z-index:1;}
+</style>
+
+<div id="criativo-script">
+    [%Criativo%]
+</div>
+
+<div id="criativo-interativo">
+    <iframe src="[%Criativo%]?click=%%CLICK_URL_UNESC%%&link=[%LinkdeDestino%]" frameborder="0" width="%%WIDTH%%" height="%%HEIGHT%%" scrolling="no"></iframe>
+</div>
+
+<div id="criativo-html">
+    <a id="click" href="[%LinkdeDestino%]" onclick="javascript:count()" target="_blank"></a>
+    <iframe src="[%Criativo%]" frameborder="0" width="%%WIDTH%%" height="%%HEIGHT%%" scrolling="no"></iframe>
+</div>
+
+<script>
+    if ('[%TipodoArquivo%]' == 'HTML + LINK'){
+        var criativo1 = document.getElementById('criativo-script');
+        var criativo2 = document.getElementById('criativo-interativo');
+        criativo1.parentNode.removeChild(criativo1);
+        criativo2.parentNode.removeChild(criativo2);
+    } else if ('[%TipodoArquivo%]' == 'HTML Interativo'){
+        var criativo1 = document.getElementById('criativo-script');
+        var criativo2 = document.getElementById('criativo-html');
+        criativo1.parentNode.removeChild(criativo1);
+        criativo2.parentNode.removeChild(criativo2);
+    } else {
+        var criativo1 = document.getElementById('criativo-html');
+        var criativo2 = document.getElementById('criativo-interativo');
+        criativo1.parentNode.removeChild(criativo1);
+        criativo2.parentNode.removeChild(criativo2);
+    }
+
+    function count() {
+        var img = document.createElement("img");
+        img.src = "%%CLICK_URL_UNESC%%";
+        console.log(img);
+    }
+
+    var submenu = top.document.getElementsByClassName('submenu')[0];
+    var adheader = top.document.getElementsByClassName('ad-home-banner')[0];
+
+function insertAfter(referenceNode, newNode) {
+    if(submenu){
+       referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+}
+
+insertAfter(adheader,submenu);
+
+</script>
+
+[%ScriptCustomizado%]

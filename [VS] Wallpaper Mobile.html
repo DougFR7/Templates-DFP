@@ -1,0 +1,100 @@
+<style type="text/css">
+     #click {position:fixed; width:100%; height: 100%; top:0;left:0; display: block;}
+     #criativo-script, #criativo-interativo, #criativo-html { position:relative; transform:translateX(-50%); left:50%; z-index:2; }
+</style>
+
+<script type="text/javascript">
+
+    //css
+    var css = "",
+    style = document.createElement("style");
+    style.type = "text/css";
+
+    css =
+    "#close{ position: absolute; top: 0px; right: 0px; background: #fff; padding: 6px 9px; font-size: 12px; font-family: Open sans, sans-serif; font-weight: bold;  display: block; color: #464646; text-decoration: none; border: 1px solid #000; }"+
+    "#ad-background { position: fixed; padding: 0; left:0; top: 60px; z-index: 100; background: #[%Bgcolor%]; width: 100%; }"+
+    "#ad-background iframe{  margin:0 auto;  display:block;}";
+
+    style.appendChild(document.createTextNode(css));
+
+    var element = top.document.getElementById('ad-background');
+    element.getElementsByTagName('div')[0].appendChild(style); 
+
+</script>
+
+<div id="criativo-script">
+    [%Criativo%]
+</div>
+
+<div id="criativo-interativo">
+    <iframe src="[%Criativo%]?click=%%CLICK_URL_UNESC%%&link=[%LinkdeDestino%]" frameborder="0" width="%%WIDTH%%" height="%%HEIGHT%%" scrolling="no"></iframe>
+</div>
+
+<div id="criativo-html">
+    <a id="click" href="[%LinkdeDestino%]" onclick="javascript:count()" target="_blank"></a>
+    <iframe src="[%Criativo%]" frameborder="0" width="%%WIDTH%%" height="%%HEIGHT%%" scrolling="no"></iframe>
+</div>
+
+<script>
+    if ('[%TipodoArquivo%]' == 'HTML + LINK'){
+        var criativo1 = document.getElementById('criativo-script');
+        var criativo2 = document.getElementById('criativo-interativo');
+        criativo1.parentNode.removeChild(criativo1);
+        criativo2.parentNode.removeChild(criativo2);
+    } else if ('[%TipodoArquivo%]' == 'HTML Interativo'){
+        var criativo1 = document.getElementById('criativo-script');
+        var criativo2 = document.getElementById('criativo-html');
+        criativo1.parentNode.removeChild(criativo1);
+        criativo2.parentNode.removeChild(criativo2);
+    } else {
+        var criativo1 = document.getElementById('criativo-html');
+        var criativo2 = document.getElementById('criativo-interativo');
+        criativo1.parentNode.removeChild(criativo1);
+        criativo2.parentNode.removeChild(criativo2);
+    }
+
+    function count() {
+        var img = document.createElement("img");
+        img.src = "%%CLICK_URL_UNESC%%";
+        console.log(img);
+    }
+</script>
+
+<script>
+
+    //elementos
+    var adheader = top.document.getElementById('ad-background');
+    var div = adheader.getElementsByTagName('div')[0];
+
+    var close = document.createElement('a');
+    close.id = "close";
+
+    var t = document.createTextNode("X");
+    close.appendChild(t);
+
+    if (top.document.getElementById('close')) {
+        // nada 
+    } else{
+        div.appendChild(close);
+    } 
+
+    var altura = adheader.offsetHeight;
+    var wrapper = top.document.getElementsByClassName('wrapper')[0];
+    
+    wrapper.style.cssText = "padding-top:20px;";
+    adheader.parentNode.style.cssText = "height:"+(altura-10)+"px;";
+
+    //funções
+    function closeWall() {
+        adheader.innerHTML = "";
+        wrapper.style.cssText = "";
+        adheader.parentNode.style.cssText = "margin:0; padding:0;";
+    }
+
+    top.document.getElementById("close").onclick = function () {
+        closeWall();
+    }
+
+</script>
+
+[%ScriptCustomizado%]
